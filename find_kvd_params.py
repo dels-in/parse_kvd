@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import filedialog
 import openpyxl
 from docx import Document
+import textract
 
 
 def extract_info_from_table(table):
@@ -16,17 +17,13 @@ def extract_info_from_table(table):
             data.append([cell1, cell2])
     return data
 
-def convert_doc_to_docx(doc_file, docx_file):
-    # Используем antiword для конвертирования .doc в .docx
-    subprocess.run(['antiword', doc_file, '-r', 'docx', '-w', docx_file])
-
 
 def extract_info_from_docx(file_path, date, well_number):
     if file_path.endswith('.doc'):
         # Если файл .doc, то конвертируем его в .docx
-        docx_file = file_path[:-4] + '.docx'
-        os.system('antiword %s > %s' % (file_path, docx_file))
-        file_path = docx_file
+        text = textract.process(file_path)
+        a = text.decode('utf-8')
+        b = 0
 
     doc = Document(file_path)
 
