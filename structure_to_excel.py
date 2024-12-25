@@ -21,8 +21,8 @@ def create_excel(folder_path):
     table = build_table(folder_path)
     max_cols = max(len(row) for row in table)
     levels = ['Уровень вложенности']
-    for i in range(max_cols - 1):
-        levels.append(f'Уровень {i + 2}')
+    for i in range(2, max_cols + 1):
+        levels.append(f'Уровень {i}')
     df = pd.DataFrame(table, columns=levels)
     df.to_excel('folder_structure.xlsx', index=False)
 
